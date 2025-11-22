@@ -2,7 +2,36 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Краткая информация о США и Германии</title>
+
+    <!-- Asosiy SEO meta-teglar -->
+    <title>США и Германия — краткая информация и автомобильные компании</title>
+    <meta name="description" content="Сайт с краткой информацией о США и Германии: столица, расположение, язык, валюта и известные автомобильные компании с логотипами.">
+    <meta name="keywords" content="США, Германия, USA, Germany, информация о странах, автомобильные компании, Ford, Tesla, Jeep, Audi, Porsche, Opel">
+    <meta name="author" content="Шахзадбек Реджепбаев">
+
+    <!-- Mobil qurilmalar uchun -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Qidiruv tizimlari uchun -->
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+
+    <!-- Saytning asosiy manzili -->
+    <link rel="canonical" href="https://rejepbayevshahzadbek-cloud.github.io/usa-germany-site/">
+
+    <!-- Open Graph (Telegram, Facebook va boshqalar uchun preview) -->
+    <meta property="og:title" content="США и Германия — краткая информация и автокомпании">
+    <meta property="og:description" content="Краткая и наглядная информация о США и Германии, а также логотипы известных автомобильных компаний.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://rejepbayevshahzadbek-cloud.github.io/usa-germany-site/">
+    <meta property="og:image" content="https://rejepbayevshahzadbek-cloud.github.io/usa-germany-site/audi.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="США и Германия — информация и автокомпании">
+    <meta name="twitter:description" content="Интерактивный сайт о США и Германии с логотипами известных автомобильных брендов.">
+    <meta name="twitter:image" content="https://rejepbayevshahzadbek-cloud.github.io/usa-germany-site/porsche.png">
+
     <style>
         * {
             box-sizing: border-box;
@@ -108,7 +137,6 @@
             font-size: 20px;
         }
 
-        /* Davlat tanlash ramkalari */
         .country-select-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -162,7 +190,7 @@
             padding: 20px;
             margin-bottom: 25px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.35);
-            display: none; /* dastlab yashirin */
+            display: none;
         }
 
         .country-header {
@@ -224,7 +252,6 @@
             border: 1px solid #ddd;
         }
 
-        /* Kliklanadigan sarlavha-kartochka */
         .car-title-toggle {
             margin-top: 18px;
             margin-bottom: 10px;
@@ -258,16 +285,15 @@
             transform: rotate(180deg);
         }
 
-        /* Animatsiyali ochilib-yopiladigan wrapper */
         .car-list-wrapper {
             overflow: hidden;
-            max-height: 1000px;      /* ochiq holat */
+            max-height: 1000px;
             opacity: 1;
             transition: max-height 0.4s ease, opacity 0.4s ease;
         }
 
         .car-list-wrapper.closed {
-            max-height: 0;           /* yopiq holat */
+            max-height: 0;
             opacity: 0;
         }
 
@@ -292,7 +318,6 @@
             scroll-behavior: smooth;
         }
 
-        /* Scroll to top tugmasi */
         #scrollTopBtn {
             position: fixed;
             bottom: 20px;
@@ -354,7 +379,6 @@
                 информацию о стране и её известных автомобильных компаниях.
             </p>
 
-            <!-- Davlat nomlari ramkada -->
             <div class="country-select-grid">
                 <div class="country-card" id="usa-card" data-target="usa">
                     <img src="https://flagcdn.com/w320/us.png" alt="США">
@@ -367,7 +391,6 @@
             </div>
         </section>
 
-        <!-- США haqida -->
         <section class="country" id="usa">
             <div class="country-header">
                 <img src="https://flagcdn.com/w320/us.png" alt="Флаг США">
@@ -392,7 +415,6 @@
                 сфера услуг и многие другие отрасли.
             </p>
 
-            <!-- CLICKABLE TITLE USA -->
             <div class="car-title-toggle" id="usaCarToggle">
                 <span class="car-toggle-icon">▼</span>
                 <span>Известные автомобильные компании США</span>
@@ -416,7 +438,6 @@
             </div>
         </section>
 
-        <!-- Germaniya haqida -->
         <section class="country" id="germany">
             <div class="country-header">
                 <img src="https://flagcdn.com/w320/de.png" alt="Флаг Германии">
@@ -440,7 +461,6 @@
                 машиностроения, автомобилестроения, электроники, химической промышленности и инженерных технологий.
             </p>
 
-            <!-- CLICKABLE TITLE GERMANY -->
             <div class="car-title-toggle" id="gerCarToggle">
                 <span class="car-toggle-icon">▼</span>
                 <span>Известные автомобильные компании Германии</span>
@@ -476,7 +496,6 @@
             </div>
         </section>
 
-        <!-- Kontaktlar – glass dizayn + Telegram -->
         <section class="country" id="contact" style="display:block; background: rgba(255,255,255,0.15); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.25); color:#ffffff;">
             <h2 style="color:#ffffff;">Контакты</h2>
 
@@ -533,18 +552,15 @@
     </footer>
 </div>
 
-<!-- Scroll to top tugmasi -->
 <button id="scrollTopBtn">Наверх ↑</button>
 
-<!-- JS -->
 <script>
     const cards = document.querySelectorAll('.country-card');
     const sections = document.querySelectorAll('.country');
     const scrollBtn = document.getElementById('scrollTopBtn');
 
-    let current = null; // hozir ochilgan bo'lim
+    let current = null;
 
-    // Davlat kartochkalari bosilganda
     cards.forEach(card => {
         card.addEventListener('click', () => {
             const targetId = card.getAttribute('data-target');
@@ -574,7 +590,6 @@
         });
     });
 
-    // USA mashina logolarini ochib/yopish + animatsiya
     const usaCarToggle = document.getElementById('usaCarToggle');
     const usaCarsWrapper = document.getElementById('usaCarsWrapper');
     const usaIcon = usaCarToggle.querySelector('.car-toggle-icon');
@@ -587,7 +602,6 @@
         usaIcon.textContent = usaOpen ? '▼' : '▲';
     });
 
-    // Germany mashina logolarini ochib/yopish + animatsiya
     const gerCarToggle = document.getElementById('gerCarToggle');
     const gerCarsWrapper = document.getElementById('gerCarsWrapper');
     const gerIcon = gerCarToggle.querySelector('.car-toggle-icon');
@@ -600,7 +614,6 @@
         gerIcon.textContent = gerOpen ? '▼' : '▲';
     });
 
-    // Scroll to top tugmasi
     window.addEventListener('scroll', () => {
         scrollBtn.style.display = window.scrollY > 250 ? 'block' : 'none';
     });
