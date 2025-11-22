@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Краткая информация о США и Германии</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url("https://images.pexels.com/photos/210182/pexels-photo-210182.jpeg?auto=compress&cs=tinysrgb&w=1600");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .overlay {
+            background: rgba(0, 0, 0, 0.55);
+            min-height: 100vh;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(6px);
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+        }
+
+        .logo {
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 20px;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li a {
+            color: #f0f0f0;
+            text-decoration: none;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            padding-bottom: 2px;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s, color 0.2s;
+        }
+
+        .nav-links li a:hover {
+            border-color: #4da3ff;
+            color: #ffffff;
+        }
+
+        header {
+            max-width: 1100px;
+            margin: 20px auto 0;
+            padding: 20px 15px 10px;
+            color: #ffffff;
+        }
+
+        header h1 {
+            margin: 0 0 5px 0;
+            font-size: 26px;
+        }
+
+        header p {
+            margin: 0;
+            color: #e0e0e0;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 10px auto 30px;
+            padding: 0 15px 20px;
+        }
+
+        .intro-card {
+            background: rgba(255, 255, 255, 0.07);
+            border-radius: 10px;
+            padding: 15px 20px;
+            color: #f1f1f1;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .intro-card h2 {
+            margin-top: 0;
+            font-size: 20px;
+        }
+
+        /* Davlat tanlash ramkalari */
+        .country-select-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin: 15px 0 20px;
+        }
+
+        .country-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 2px solid #4da3ff;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+        }
+
+        .country-card img {
+            width: 45px;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+        }
+
+        .country-card-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #003366;
+        }
+
+        .country-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            background: #ffffff;
+        }
+
+        .country-card.active {
+            background: #003366;
+            border-color: #ffffff;
+        }
+
+        .country-card.active .country-card-title {
+            color: #ffffff;
+        }
+
+        .country {
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+            display: none; /* dastlab yashirin */
+        }
+
+        .country-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .country-header img {
+            width: 70px;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+        }
+
+        .country h2 {
+            margin: 0;
+            color: #003366;
+        }
+
+        .info {
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .info strong {
+            display: inline-block;
+            width: 140px;
+            color: #003366;
+        }
+
+        .country p {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .car-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .car-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .car-item img {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+            background: #fff;
+            border-radius: 6px;
+            padding: 4px;
+            border: 1px solid #ddd;
+        }
+
+        /* Kliklanadigan sarlavha-kartochka */
+        .car-title-toggle {
+            margin-top: 18px;
+            margin-bottom: 10px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #e6f2ff, #ffffff);
+            border: 1px solid #c2daf8;
+            font-weight: bold;
+            font-size: 18px;
+            color: #003366;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+            transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+        }
+
+        .car-title-toggle:hover {
+            background: linear-gradient(135deg, #d5e8ff, #ffffff);
+            transform: translateY(-1px);
+            box-shadow: 0 5px 12px rgba(0,0,0,0.2);
+        }
+
+        .car-toggle-icon {
+            font-size: 16px;
+            transition: transform 0.2s ease;
+        }
+
+        .car-title-toggle.collapsed .car-toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Animatsiyali ochilib-yopiladigan wrapper */
+        .car-list-wrapper {
+            overflow: hidden;
+            max-height: 1000px;      /* ochiq holat */
+            opacity: 1;
+            transition: max-height 0.4s ease, opacity 0.4s ease;
+        }
+
+        .car-list-wrapper.closed {
+            max-height: 0;           /* yopiq holat */
+            opacity: 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px 0 25px 0;
+            font-size: 14px;
+            color: #e0e0e0;
+        }
+
+        footer a {
+            color: #4dc3ff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Scroll to top tugmasi */
+        #scrollTopBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 200;
+            background: rgba(0, 0, 0, 0.75);
+            color: #ffffff;
+            border: 1px solid #4da3ff;
+            border-radius: 50px;
+            padding: 10px 15px;
+            font-size: 13px;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+        }
+
+        #scrollTopBtn:hover {
+            background: #4da3ff;
+        }
+
+        @media (max-width: 700px) {
+            .nav-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                margin-top: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="overlay">
+
+    <nav>
+        <div class="nav-container">
+            <div class="logo">США & Германия</div>
+            <ul class="nav-links">
+                <li><a href="#top">Главная</a></li>
+                <li><a href="#usa-card">США</a></li>
+                <li><a href="#germany-card">Германия</a></li>
+                <li><a href="#contact">Контакты</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header id="top">
+        <h1>Краткая информация о США и Германии</h1>
+        <p>Государства, их общая характеристика и известные автомобильные компании</p>
+    </header>
+
+    <main>
+        <section class="intro-card">
+            <h2>О сайте</h2>
+            <p>
+                Нажмите на название государства в рамке ниже, чтобы увидеть подробную
+                информацию о стране и её известных автомобильных компаниях.
+            </p>
+
+            <!-- Davlat nomlari ramkada -->
+            <div class="country-select-grid">
+                <div class="country-card" id="usa-card" data-target="usa">
+                    <img src="https://flagcdn.com/w320/us.png" alt="США">
+                    <div class="country-card-title">Соединённые Штаты Америки (США)</div>
+                </div>
+                <div class="country-card" id="germany-card" data-target="germany">
+                    <img src="https://flagcdn.com/w320/de.png" alt="Германия">
+                    <div class="country-card-title">Германия</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- США haqida -->
+        <section class="country" id="usa">
+            <div class="country-header">
+                <img src="https://flagcdn.com/w320/us.png" alt="Флаг США">
+                <h2>Соединённые Штаты Америки (США)</h2>
+            </div>
+
+            <div class="info">
+                <strong>Столица:</strong> Вашингтон, Округ Колумбия
+            </div>
+            <div class="info">
+                <strong>Расположение:</strong> Северная Америка
+            </div>
+            <div class="info">
+                <strong>Официальный язык:</strong> Английский (де-факто)
+            </div>
+            <div class="info">
+                <strong>Валюта:</strong> Доллар США (USD)
+            </div>
+            <p>
+                США — одна из крупнейших экономических и промышленно развитых стран мира.
+                Здесь хорошо развиты высокие технологии, авиация, автомобилестроение, химическая промышленность,
+                сфера услуг и многие другие отрасли.
+            </p>
+
+            <!-- CLICKABLE TITLE USA -->
+            <div class="car-title-toggle" id="usaCarToggle">
+                <span class="car-toggle-icon">▼</span>
+                <span>Известные автомобильные компании США</span>
+            </div>
+
+            <div class="car-list-wrapper" id="usaCarsWrapper">
+                <ul class="car-list" id="usaCars">
+                    <li class="car-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Ford_logo_flat.svg" alt="Ford">
+                        <span><strong>Ford Motor Company</strong> — один из старейших автопроизводителей мира, основан в Детройте.</span>
+                    </li>
+                    <li class="car-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/b/bb/Tesla_T_symbol.svg" alt="Tesla">
+                        <span><strong>Tesla, Inc.</strong> — производитель электромобилей, известный своими инновационными технологиями.</span>
+                    </li>
+                    <li class="car-item">
+                        <img src="jeep.png" alt="Jeep">
+                        <span><strong>Jeep</strong> — популярный американский бренд внедорожников.</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Germaniya haqida -->
+        <section class="country" id="germany">
+            <div class="country-header">
+                <img src="https://flagcdn.com/w320/de.png" alt="Флаг Германии">
+                <h2>Германия</h2>
+            </div>
+
+            <div class="info">
+                <strong>Столица:</strong> Берлин
+            </div>
+            <div class="info">
+                <strong>Расположение:</strong> Центральная Европа
+            </div>
+            <div class="info">
+                <strong>Официальный язык:</strong> Немецкий
+            </div>
+            <div class="info">
+                <strong>Валюта:</strong> Евро (EUR)
+            </div>
+            <p>
+                Германия — одна из наиболее развитых промышленных стран Европы. Страна славится высоким качеством
+                машиностроения, автомобилестроения, электроники, химической промышленности и инженерных технологий.
+            </p>
+
+            <!-- CLICKABLE TITLE GERMANY -->
+            <div class="car-title-toggle" id="gerCarToggle">
+                <span class="car-toggle-icon">▼</span>
+                <span>Известные автомобильные компании Германии</span>
+            </div>
+
+            <div class="car-list-wrapper" id="gerCarsWrapper">
+                <ul class="car-list" id="gerCars">
+                    <li class="car-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6d/Volkswagen_logo_2019.svg" alt="Volkswagen">
+                        <span><strong>Volkswagen (VW)</strong> — крупнейший автопроизводитель Германии, главный завод расположен в Вольфсбурге.</span>
+                    </li>
+                    <li class="car-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/BMW.svg" alt="BMW">
+                        <span><strong>BMW</strong> — премиальный производитель автомобилей, штаб-квартира в Мюнхене.</span>
+                    </li>
+                    <li class="car-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/90/Mercedes-Logo.svg" alt="Mercedes">
+                        <span><strong>Mercedes-Benz</strong> — известный бренд класса люкс, штаб-квартира в городе Штутгарт.</span>
+                    </li>
+                    <li class="car-item">
+                        <img src="audi.png" alt="Audi">
+                        <span><strong>Audi</strong> — производитель премиальных автомобилей, базируется в Ингольштадте.</span>
+                    </li>
+                    <li class="car-item">
+                        <img src="porsche.png" alt="Porsche">
+                        <span><strong>Porsche</strong> — производитель спортивных автомобилей, расположен в Штутгарте.</span>
+                    </li>
+                    <li class="car-item">
+                        <img src="opel.png" alt="Opel">
+                        <span><strong>Opel</strong> — один из старейших немецких автозаводов, штаб-квартира в Рюссельсхайме.</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Kontaktlar – glass dizayn + Telegram -->
+        <section class="country" id="contact" style="display:block; background: rgba(255,255,255,0.15); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.25); color:#ffffff;">
+            <h2 style="color:#ffffff;">Контакты</h2>
+
+            <div style="margin-top:15px;">
+                <div style="
+                    background: rgba(0,0,0,0.35);
+                    padding: 15px 20px;
+                    border-radius: 12px;
+                    color: #fff;
+                    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+                    font-size: 15px;
+                    line-height: 1.6;
+                    border: 1px solid rgba(255,255,255,0.25);
+                ">
+                    <p><strong>Автор:</strong> Шахзадбек Реджепбаев</p>
+                    <p><strong>Университет:</strong> УЛГУ</p>
+                    <p><strong>Группа:</strong> ИТТС-0-25</p>
+
+                    <p style="margin-top:10px; display:flex; align-items:center; gap:8px;">
+                        <span style="display:inline-flex; width:22px; height:22px; border-radius:50%; background:#4dc3ff; align-items:center; justify-content:center;">
+                            <span style="font-size:14px; font-weight:bold; color:#fff;">T</span>
+                        </span>
+                        <strong>Telegram:</strong>
+                        <a href="https://t.me/shakhzod_shukhratov1" target="_blank"
+                           style="
+                               color:#4dc3ff;
+                               font-weight:bold;
+                               text-decoration:none;
+                               padding: 5px 10px;
+                               border-radius: 6px;
+                               background: rgba(0,0,0,0.5);
+                               transition:0.2s;
+                           "
+                           onmouseover="this.style.background='rgba(77,195,255,0.5)'; this.style.color='#fff';"
+                           onmouseout="this.style.background='rgba(0,0,0,0.5)'; this.style.color='#4dc3ff';"
+                        >
+                            @shakhzod_shukhratov1
+                        </a>
+                    </p>
+                </div>
+            </div>
+
+            <p style="margin-top:10px; color:#e5e5e5; font-size:13px;">
+                Свяжитесь со мной в любое время через Telegram.
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>Автор сайта: Шахзадбек Реджепбаев</p>
+        <p>Университет: УЛГУ | Группа: ИТТС-0-25</p>
+        <p>Telegram: <a href="https://t.me/shakhzod_shukhratov1" target="_blank">@shakhzod_shukhratov1</a></p>
+        <p>&copy; 2025</p>
+    </footer>
+</div>
+
+<!-- Scroll to top tugmasi -->
+<button id="scrollTopBtn">Наверх ↑</button>
+
+<!-- JS -->
+<script>
+    const cards = document.querySelectorAll('.country-card');
+    const sections = document.querySelectorAll('.country');
+    const scrollBtn = document.getElementById('scrollTopBtn');
+
+    let current = null; // hozir ochilgan bo'lim
+
+    // Davlat kartochkalari bosilganda
+    cards.forEach(card => {
+        card.addEventListener('click', () => {
+            const targetId = card.getAttribute('data-target');
+            const targetSection = document.getElementById(targetId);
+
+            if (current === targetId) {
+                current = null;
+                card.classList.remove('active');
+                if (targetSection && targetSection.id !== 'contact') {
+                    targetSection.style.display = 'none';
+                }
+                return;
+            }
+
+            current = targetId;
+
+            cards.forEach(c => c.classList.remove('active'));
+            sections.forEach(sec => {
+                if (sec.id !== 'contact') sec.style.display = 'none';
+            });
+
+            card.classList.add('active');
+            if (targetSection) {
+                targetSection.style.display = 'block';
+                targetSection.scrollIntoView({behavior: 'smooth', block: 'start'});
+            }
+        });
+    });
+
+    // USA mashina logolarini ochib/yopish + animatsiya
+    const usaCarToggle = document.getElementById('usaCarToggle');
+    const usaCarsWrapper = document.getElementById('usaCarsWrapper');
+    const usaIcon = usaCarToggle.querySelector('.car-toggle-icon');
+    let usaOpen = true;
+
+    usaCarToggle.addEventListener('click', () => {
+        usaOpen = !usaOpen;
+        usaCarsWrapper.classList.toggle('closed', !usaOpen);
+        usaCarToggle.classList.toggle('collapsed', !usaOpen);
+        usaIcon.textContent = usaOpen ? '▼' : '▲';
+    });
+
+    // Germany mashina logolarini ochib/yopish + animatsiya
+    const gerCarToggle = document.getElementById('gerCarToggle');
+    const gerCarsWrapper = document.getElementById('gerCarsWrapper');
+    const gerIcon = gerCarToggle.querySelector('.car-toggle-icon');
+    let gerOpen = true;
+
+    gerCarToggle.addEventListener('click', () => {
+        gerOpen = !gerOpen;
+        gerCarsWrapper.classList.toggle('closed', !gerOpen);
+        gerCarToggle.classList.toggle('collapsed', !gerOpen);
+        gerIcon.textContent = gerOpen ? '▼' : '▲';
+    });
+
+    // Scroll to top tugmasi
+    window.addEventListener('scroll', () => {
+        scrollBtn.style.display = window.scrollY > 250 ? 'block' : 'none';
+    });
+
+    scrollBtn.addEventListener('click', () => {
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    });
+</script>
+
+</body>
+</html>
